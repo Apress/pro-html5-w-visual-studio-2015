@@ -1,0 +1,328 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript" src="createPieces.js"></script>
+    <style>
+        body div {
+            -webkit-column-count: 3;
+            column-count: 3;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div>
+            <canvas id="composting1" width="120" height="120"></canvas>
+            <br />source-over
+        </div>
+        <div>
+            <canvas id="composting2" width="120" height="120"></canvas>
+            <br />destination-over
+        </div>
+        <div>
+            <canvas id="composting3" width="120" height="120"></canvas>
+            <br />source-in
+        </div>
+        <div>
+            <canvas id="composting4" width="120" height="120"></canvas>
+            <br />destination-in
+        </div>
+        <div>
+            <canvas id="composting5" width="120" height="120"></canvas>
+            <br />source-out
+        </div>
+        <div>
+            <canvas id="composting6" width="120" height="120"></canvas>
+            <br />destination-out
+        </div>
+        <div>
+            <canvas id="composting7" width="120" height="120"></canvas>
+            <br />source-atop
+        </div>
+        <div>
+            <canvas id="composting8" width="120" height="120"></canvas>
+            <br />destination-atop
+        </div>
+        <div>
+            <canvas id="composting9" width="120" height="120"></canvas>
+            <br />xor
+        </div>
+        <div>
+            <canvas id="composting10" width="120" height="120"></canvas>
+            <br />copy
+        </div>
+        <div>
+            <canvas id="composting11" width="120" height="120"></canvas>
+            <br />lighter
+        </div>
+        <div>
+            <canvas id="composting12" width="120" height="120"></canvas>
+            <br />darker
+        </div>
+        <!--
+        <canvas id="board" width="600" height="600">
+            Not supported
+        </canvas>
+        <canvas id="solarSystem" width="450" height="400">
+            Not supported
+        </canvas>
+        -->
+    </div>
+
+    <!--<script id="chess board" type="text/javascript">
+        // Get the canvas context
+        var chessCanvas = document.getElementById("board");
+        var chessContext = chessCanvas.getContext("2d");
+
+        // Define the chess piece images
+        var imgPawn = new Image();
+        var imgRook = new Image();
+        var imgKnight = new Image();
+        var imgBishop = new Image();
+        var imgQueen = new Image();
+        var imgKing = new Image();
+        var imgPawnW = new Image();
+        var imgRookW = new Image();
+        var imgKnightW = new Image();
+        var imgBishopW = new Image();
+        var imgQueenW = new Image();
+        var imgKingW = new Image();
+
+        // Define an array to store 32 pieces
+        var pieces = new Array(32);
+        var moveNumber = -1;
+        var timer;
+
+        loadImages();
+        createPieces();
+
+        setTimeout(drawBoard, 300);
+
+        timer = setInterval(makeNextMove(), 2000);
+
+        // Draw the chess board
+        function drawBoard() {
+
+            chessContext.clearRect(0, 0, 600, 600);
+
+            var gradient = chessContext.createLinearGradient(0, 600, 600, 0);
+            gradient.addColorStop(0.0, "#D50005");
+            gradient.addColorStop(0.5, "#E27883");
+            gradient.addColorStop(1.0, "#FFDDDD");
+
+            // Clip the path
+            chessContext.beginPath();
+            chessContext.arc(300, 300, 300, 0, (Math.PI * 2), true);
+            chessContext.clip();
+
+            chessContext.fillStyle = gradient;
+            chessContext.strokeStyle = "red";
+
+            // Draw the alternating squares
+            for (var x = 0; x < 8; x++) {
+                for (var y = 0; y < 8; y++) {
+                    if ((x + y) % 2) {
+                        chessContext.fillRect(75 * x, 75 * y, 75, 75);
+                    }
+                }
+            }
+
+            // Add a border around the entire board
+            chessContext.strokeRect(0, 0, 600, 600);
+
+            drawAllPieces();
+        }
+
+        function loadImages() {
+            imgPawn.src = "images/pawn.png";
+            imgRook.src = "images/rook.png";
+            imgKnight.src = "images/knight.png";
+            imgBishop.src = "images/bishop.png";
+            imgQueen.src = "images/queen.png";
+            imgKing.src = "images/king.png";
+            imgPawnW.src = "images/wpawn.png";
+            imgRookW.src = "images/wrook.png";
+            imgKnightW.src = "images/wknight.png";
+            imgBishopW.src = "images/wbishop.png";
+            imgQueenW.src = "images/wqueen.png";
+            imgKingW.src = "images/wking.png";
+        }
+
+        // Define a class to store the piece properties
+        function ChessPiece() {
+            this.image = null;
+            this.x = 0;
+            this.y = 0;
+            this.height = 0;
+            this.width = 0;
+            this.killed = false;
+        }
+
+        // Draw a chess piece
+        function drawPiece(p) {
+            if (!p.killed)
+                chessContext.drawImage(p.image,
+                                        (75 - p.width) / 2 + (75 * p.x),
+                                        73 - p.height + (75 * p.y),
+                                        p.width,
+                                        p.height);
+        }
+
+        // Draw all of the chess pieces
+        function drawAllPieces() {
+            for (var i = 0; i < 32; i++) {
+                if (pieces[i] != null) {
+                    drawPiece(pieces[i]);
+                }
+            }
+        }
+
+        function makeNextMove() {
+            function inner() {
+                if (moveNumber === 1) {
+                    pieces[20].y--;
+                }
+                if (moveNumber === 2) {
+                    pieces[4].y += 2;
+                }
+                if (moveNumber === 3) {
+                    pieces[29].y = 4;
+                    pieces[29].x = 2;
+                }
+                if (moveNumber === 4) {
+                    pieces[6].y++;
+                }
+                if (moveNumber === 5) {
+                    pieces[30].x = 5;
+                    pieces[30].y = 5;
+                }
+                if (moveNumber === 6) {
+                    pieces[7].y++;
+                }
+                if (moveNumber === 7) {
+                    pieces[30].x = 5;
+                    pieces[30].y = 1;
+                    pieces[5].killed = true;
+                    clearInterval(timer);
+                }
+
+                moveNumber++;
+
+                drawBoard();
+                drawAllPieces();
+
+                if (moveNumber > 7) {
+                    chessContext.font = "30pt Arial";
+                    chessContext.fillStyle = "black";
+                    chessContext.fillText("Checkmate!", 200, 220);
+                }
+            }
+
+            return inner;
+        }
+    </script>-->
+
+    <!--<script id="solar system" type="text/javascript">
+
+        var ss = document.getElementById('solarSystem')
+        var ssContext = ss.getContext('2d');
+
+        setInterval(animateSS, 100);
+
+
+        function animateSS() {
+            var ss = document.getElementById('solarSystem')
+            var ssContext = ss.getContext('2d');
+
+            // Clear the canvas and draw the background
+            ssContext.clearRect(0, 0, 450, 400);
+            ssContext.fillStyle = "#2F1D92";
+            ssContext.fillRect(0, 0, 450, 400);
+
+            ssContext.save();
+
+            // Draw the sun
+            ssContext.translate(220, 200);
+            ssContext.fillStyle = "yellow";
+            ssContext.beginPath();
+            ssContext.arc(0, 0, 15, 0, Math.PI * 2, true);
+            ssContext.fill();
+
+            // Draw the earth orbit
+            ssContext.strokeStyle = "black";
+            ssContext.scale(1.1, 1);
+            ssContext.beginPath();
+            ssContext.arc(0, 0, 150, 0, Math.PI * 2);
+            ssContext.stroke();
+
+            // Compute the current time in seconds (use the milliseconds
+            // to allow for fractional parts).
+            var now = new Date();
+            var seconds = ((now.getSeconds() * 1000) + now.getMilliseconds()) / 1000;
+
+            //---------------------------------------------
+            // Earth
+            //---------------------------------------------
+            // Rotate the context once every 60 seconds
+            var anglePerSecond = ((Math.PI * 2) / 60);
+            ssContext.rotate(anglePerSecond * seconds);
+            ssContext.translate(150, 0);
+
+            // Draw the earth
+            ssContext.fillStyle = "green";
+            ssContext.beginPath();
+            ssContext.arc(0, 0, 10, 0, Math.PI * 2, true);
+            ssContext.fill();
+
+            //---------------------------------------------
+            // Moon
+            //---------------------------------------------
+            // Rotate the context 12 times for every earth revolution
+            anglePerSecond = 12 * ((Math.PI * 2) / 60);
+            ssContext.rotate(anglePerSecond * seconds);
+            ssContext.translate(0, 35);
+
+            // draw the moon
+            ssContext.fillStyle = "white";
+            ssContext.beginPath();
+            ssContext.arc(0, 0, 5, 0, Math.PI * 2, true);
+            ssContext.fill();
+
+            ssContext.restore()
+        }
+    </script>-->
+
+    <script id="compositing" type="text/javascript">
+        for (var i = 1; i <= 12; i++) {
+            var c = document.getElementById("composting" + i);
+            var cContext = c.getContext("2d");
+
+            cContext.fillStyle = "red";
+            cContext.fillRect(10, 20, 80, 80);
+
+            switch (i) {
+                case 1: cContext.globalCompositeOperation = "source-over"; break;
+                case 2: cContext.globalCompositeOperation = "destination-over"; break;
+                case 3: cContext.globalCompositeOperation = "source-in"; break;
+                case 4: cContext.globalCompositeOperation = "destination-in"; break;
+                case 5: cContext.globalCompositeOperation = "source-out"; break;
+                case 6: cContext.globalCompositeOperation = "destination-out"; break;
+                case 7: cContext.globalCompositeOperation = "source-atop"; break;
+                case 8: cContext.globalCompositeOperation = "destination-atop"; break;
+                case 9: cContext.globalCompositeOperation = "xor"; break;
+                case 10: cContext.globalCompositeOperation = "copy"; break;
+                case 11: cContext.globalCompositeOperation = "lighter"; break;
+                case 12: cContext.globalCompositeOperation = "darker"; break;
+            }
+
+
+            cContext.fillStyle = "blue";
+            cContext.beginPath();
+            cContext.arc(65, 75, 40, 0, (Math.PI * 2), true);
+            cContext.fill();
+        }
+    </script>
+</body>
+</html>

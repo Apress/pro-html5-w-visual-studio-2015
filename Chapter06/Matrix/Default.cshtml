@@ -1,0 +1,647 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Chapter 4 - CSS Demo</title>
+
+        <script type="text/javascript">
+            var angle = 0;
+            var t;
+            function rotateImage(value) {
+                document.getElementById("phone").style.transform
+                    = "rotateY(" + value + "deg)";
+            }
+            function toggleAnimation() {
+                if (angle == 0) {
+                    t = setInterval(function () {
+                        rotateImage(angle);
+                        angle += 1;
+                        if (angle >= 360)
+                            angle = 0;
+                    }, 100);
+                }
+                else {
+                    clearInterval(t);
+                    angle = 0;
+                    rotateImage(angle);
+                }
+            }
+            function adjustInternalLinks(){
+                var links = document.querySelectorAll("nav ul li a[href ^='#']");
+                for (var i=0; i < links.length; i++){
+                    links[i].style.color = "green";
+                }
+            }
+        </script>
+
+        <style>
+	        /* Basic tag settings */  
+	        body 
+	        {  
+		        margin: 0 auto;  
+		        width: 940px;  
+		        font: 13px/22px Helvetica, Arial, sans-serif;  
+		        background: #f0f0f0;  
+	        }  
+
+	        h2 
+	        {  
+		        font-size: 18px;  
+		        line-height: 5px;  
+		        padding: 2px 0;  
+	        }  
+
+	        h3 
+	        {  
+		        font-size: 12px;  
+		        line-height: 5px;  
+		        padding: 2px 0;  
+	        }  
+
+	        h1, h2, h3
+	        {
+		        text-align: left;
+	        }
+
+	        p 
+	        {  
+		        padding-bottom: 2px;  
+	        }  
+
+	        .book
+	        {
+		        padding: 5px;
+	        }
+
+	        /* Content sections */
+	        .featuredContent
+	        {
+		        background-color: #ffffff;
+		        border: 2px solid #6699cc;
+		        padding: 15px 15px 15px 15px;
+	        }
+
+	        .otherContent
+	        {
+		        background-color: #c0c0c0;
+		        border: 1px solid #999999;
+		        padding: 15px 15px 15px 15px;
+	        }
+
+	        aside 
+	        {  
+		        background-color: #6699cc;
+		        padding: 5px 5px 5px 5px;
+	        } 
+
+	        footer
+	        {  
+		        margin-top: 12px;
+		        text-align:center;
+		        background-color: #ddd;  
+	        }
+
+	        footer p
+	        {
+		        padding-top: 10px;
+	        }
+
+	        /* Navigation Section */
+	        nav 
+	        {  
+		        left: 0;  
+		        background-color: #003366;  
+	        }  
+
+	        nav ul 
+	        {  
+		        margin: 0;
+		        list-style: none;  
+	        }  
+
+	        nav ul li 
+	        {  
+		        float: left;  
+	        }  
+
+	        nav ul li a 
+	        {  
+		        display: block;  
+		        margin-right: 20px;  
+		        width: 140px;
+		        font-size: 14px;  
+		        line-height: 28px;  
+		        text-align: center;
+		        padding-bottom: 2px;
+		        text-decoration: none;  
+		        color: #cccccc;  
+	        }  
+
+	        nav ul li a:hover 
+	        {  
+		        color: #fff;  
+	        }  
+            
+            /* Rounded borders */
+            .rounded 
+            {
+                border: 1px solid;
+                border-color:#999999;
+                border-radius:25px;
+                padding: 24px;  
+            }
+
+            aside 
+            {  
+                border: 1px solid #999999;
+                border-radius:12px;
+            } 
+
+            /* Make the radius half of the height */
+            nav 
+            {  
+                min-height: 30px; 
+                border-radius:15px;
+            }  
+
+            footer
+            {  
+                height: 50px; 
+                border-radius:25px;
+            }    
+
+            /* Gradients */
+            .intro 
+            {  
+                border: 1px solid #999999;
+                text-align: left;
+                padding-left: 15px;
+                margin-top: 6px;  
+                border-radius: 25px;
+                background-image: linear-gradient(45deg, #ffffff, #6699cc);
+            }
+
+            /* Setup a table for the content and sidebar */
+            #contentArea 
+            {  
+                display: table;  
+            }  
+
+            #mainContent 
+            {  
+                display: table-cell;  
+                padding-right: 2px;  
+            }  
+
+            aside 
+            {  
+                display: table-cell;  
+                width: 280px;  
+            }
+
+            /* Setup multiple columns for the articles */
+            .otherContent
+            {
+                text-align:justify;
+                padding:6px;
+    
+                -webkit-column-count: 2;
+                column-count: 2;  
+
+                -webkit-column-gap: 20px;
+                column-gap: 20px;
+            }
+
+            /* Add the box shadow */
+            article img
+            {
+                margin: 10px 0;
+                box-shadow: 3px 3px 12px #222; 
+            }
+
+            .book img
+            {
+                margin: 10px 0;
+                display: block; 
+                box-shadow: 2px 2px 5px #444;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            aside 
+            {  
+                box-shadow: 3px 3px 3px #aaaaaa;
+            }
+
+            /* Stripe the title list */
+            #titles article:nth-child(2n+1) 
+            {  
+                background: #c0c0c0;  
+                border: 1px solid #6699cc;  
+                border-radius: 10px; 
+            }
+
+            #titles article:nth-child(2n+0) 
+            {  
+                background: #6699cc;  
+                border: 1px solid #c0c0c0;  
+                border-radius: 10px; 
+            }
+            
+            /* Text decorations */
+            h2
+            {
+                text-decoration: underline;
+                -moz-text-decoration-line: underline;
+                -moz-text-decoration-style: wavy;
+                -moz-text-decoration-color: red;
+                text-decoration-line: underline;
+                text-decoration-style: wavy;
+                text-decoration-color: red;
+            }
+            
+            h3:first-letter
+            {
+                text-shadow: 2px -5px 1px ;
+            }
+            
+            /* Transforms */
+            .rotateContainer
+            {
+                -webkit-perspective: 360;
+                perspective: 360px;
+            }
+
+            .rotate
+            {
+                -webkit-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+            }
+            
+            /* Animate the moon phases */
+            @@-webkit-keyframes moonPhases 
+            {
+            0%   {background-image:url("images/moon1.png");}
+            12%   {background-image:url("images/moon2.png");}
+            25%   {background-image:url("images/moon3.png");}
+            37%   {background-image:url("images/moon4.png");}
+            50%   {background-image:url("images/moon5.png");}
+            62%   {background-image:url("images/moon6.png");}
+            75%   {background-image:url("images/moon7.png");}
+            87%   {background-image:url("images/moon8.png");}
+            100%   {background-image:url("images/moon1.png");}
+            }
+            
+            @@keyframes moonPhases 
+            {
+            0%   {background-image:url("images/moon1.png");}
+            12%   {background-image:url("images/moon2.png");}
+            25%   {background-image:url("images/moon3.png");}
+            37%   {background-image:url("images/moon4.png");}
+            50%   {background-image:url("images/moon5.png");}
+            62%   {background-image:url("images/moon6.png");}
+            75%   {background-image:url("images/moon7.png");}
+            87%   {background-image:url("images/moon8.png");}
+            100%   {background-image:url("images/moon1.png");}
+            }
+
+            #moon
+            {
+                width:115px;
+                height:115px;
+                background-image: url("images/moon1.png");
+                background-repeat: no-repeat;
+                
+                -webkit-animation-name:moonPhases; 
+                -webkit-animation-duration:4s;
+                -webkit-animation-delay:3s;
+                -webkit-animation-iteration-count:10;
+
+                animation-name:moonPhases; 
+                animation-duration:4s;
+                animation-delay:3s;
+                animation-iteration-count:10;
+            }
+
+            @@media screen and (max-width: 940px)
+            {
+                body
+                {
+                    width: 100%;
+                }
+
+                aside 
+                {
+                    width: 30%;
+                }
+    
+                nav ul li a 
+                {  
+                    width: 80px; 
+                }  
+            }
+
+            @@media screen and (max-width: 600px) 
+            {
+                /* Move the aside to the bottom of the page */
+                #contentArea, #MainContent, aside 
+                {
+                    display: block;
+                }
+    
+                aside 
+                {
+                    width: 98%;
+                }
+    
+                /* Use a single column for the article content */
+                .otherContent 
+                {
+                    -webkit-column-count: 1;
+                    column-count: 1;
+                }
+
+                /* Fix the line spacing of the header */
+                h2, h3 
+                {
+                    line-height:normal;
+                }
+
+                /* Force the intro element to stretch to fit the content */
+                .intro 
+                {
+                    height: min-content;
+                }
+
+                /* Move the book images to the left */
+                .book img 
+                {
+                    float: left; 
+                    margin-right: 10px;
+                    margin-bottom: 5px;
+                }
+
+                /* Make the book elements tall enough to fit the image */
+                .book 
+                {
+                    min-height: 120px;
+                }
+            
+                nav ul
+                {
+                    flex-direction: column;
+                }
+            }
+
+            nav ul 
+            {
+                display: flex;
+                flex-flow: row wrap;
+                justify-content: flex-start;
+            }
+
+            nav ul li a 
+            {
+                width: auto;  
+            }
+
+            @@media screen and (max-width: 400px) 
+            {
+                nav ul
+                {
+                    flex-direction: column;
+                }
+            }
+
+        </style>
+    </head>
+    <body onload="adjustInternalLinks()">
+        <header class="intro">
+            <h1>CSS Demo</h1>
+            <h2>Introducing the new HTML5 features</h2>
+            <h3>
+                Use the new CSS3 features to build some of the most visually 
+                appealing web sites.
+            </h3>
+        </header>
+        
+        <nav>
+            <ul>  
+                <li><a href="#feature">Feature</a></li>  
+                <li><a href="#other">Article</a></li>  
+                <li><a href="#another">Archives</a></li>  
+                <li><a href="http://www.apress.com" target="_blank">Apress</a></li>  
+            </ul>  
+        </nav>
+        
+        <div id="contentArea">
+            
+            <div id="mainContent">
+                <section class="rounded">
+                    <header>
+                        <h2>Main content area</h2>  
+                    </header>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, 
+                        sed do eiusmod tempor incididunt ut labore et dolore magna 
+                        aliqua. Ut enim ad minim veniam, quis nostrud exercitation  
+                        ullamco laboris nisi ut.
+                    </p>  
+                </section>
+                
+                <section>
+                    <article class="featuredContent">
+                        <a id="feature"></a>
+                        <header>
+                            <h3>Featured Article</h3>
+                        </header>
+                        
+                        <div class="rotateContainer">
+                            <p>This is really cool...</p>
+                            <img class="rotate" id="phone" 
+                                 src="images/phonebooth.jpg" 
+                                 alt="phonebooth" 
+                                 onclick="toggleAnimation()"/>
+                            <br />
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing 
+                                elit, sed do eiusmod tempor incididunt ut labore et 
+                                dolore magna aliqua. Ut enim ad minim veniam, quis 
+                                nostrud exercitation ullamco laboris nisi ut.
+                            </p>  
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing 
+                                elit, sed do eiusmod tempor incididunt ut labore et 
+                                dolore magna aliqua. Ut enim ad minim veniam, quis 
+                                nostrud exercitation ullamco laboris nisi ut.
+                            </p>  
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing 
+                                elit, sed do eiusmod tempor incididunt ut labore et 
+                                dolore magna aliqua. Ut enim ad minim veniam, quis 
+                                nostrud exercitation ullamco laboris nisi ut.
+                            </p>  
+                        </div>
+                    </article>
+                
+                    <article class="otherContent">
+                        <a id="other"></a>
+                        <header>
+                            <h3>Rounded Borders</h3>
+                        </header>
+                        
+                        <div>
+                            <p>Details about rounded corners</p>
+                            <p>
+                                One of the most common features that you'll hear 
+                                about is the use of rounded corners and we'll cover 
+                                that here. Also, by configuring the div size and 
+                                radius properly you can also make circular divs
+                            </p>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing 
+                                elit, sed do eiusmod tempor incididunt ut labore et 
+                                dolore magna aliqua. Ut enim ad minim veniam, quis 
+                                nostrud exercitation ullamco laboris nisi ut.
+                            </p>  
+                        </div>
+                    </article>
+                    
+                    <article class="otherContent">
+                        <a id="another"></a>
+                        <header>
+                            <h3>Another Interesting Article</h3>
+                        </header>
+                        
+                        <div>
+                            <p>More things to say...</p>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing 
+                                elit. Proin luctus tincidunt justo nec tempor. 
+                                Aliquam erat volutpat. Fusce facilisis ullamcorper 
+                                consequat. Vestibulum non sapien lectus. Nam mi 
+                                augue, posuere at tempus vel, dignissim vitae nulla. 
+                                Nullam at quam eu sapien mattis ultrices. Quisque 
+                                quis leo mi, at lobortis dolor. Nullam scelerisque 
+                                facilisis placerat. Fusce a augue erat, malesuada 
+                                euismod dui. Duis iaculis risus id felis volutpat 
+                                elementum. Fusce blandit iaculis quam a cursus. 
+                                Cras varius tincidunt cursus. Morbi justo eros, 
+                                adipiscing ac placerat sed, posuere et mi. 
+                                Suspendisse vulputate viverra aliquet. Duis non 
+                                enim a nibh consequat mollis ac tempor lorem. 
+                                Phasellus elit leo, semper eu luctus et, suscipit 
+                                at lacus. In hac habitasse platea dictumst. Duis 
+                                dignissim justo sit amet nulla pulvinar sodales.        
+                            </p>
+                        </div>
+                    </article>
+                </section>
+            </div>
+            
+            <aside id="sidebar">
+                <h3>Other Titles</h3>
+                <div id="moon"></div>
+                <p>
+                    Check out some of the other titles available from Apress.
+                </p> 
+                <section id="titles">
+                    <article class="book">
+                        <header>
+                            <a href="http://www.apress.com/9781430240747" 
+                               target="_blank">
+                                <img src="images\office365.png" 
+                                     alt="Pro Office 365"/>
+                            </a>
+                        </header>
+                        <p>
+                            Pro Office 365 Development is a practical, hands-on 
+                            guide to building cloud-based solutions using the 
+                            Office 365 platform.
+                        </p>
+                    </article>
+                
+                    <article class="book">
+                        <header>
+                            <a href="http://www.apress.com/9781430235781" 
+                               target="_blank">
+                                <img src="images\access2010.png" 
+                                     alt="Pro Access 2010"/>
+                            </a>
+                        </header>
+                        <p>
+                            Pro Access 2010 Development is a fundamental resource 
+                            for developing business applications that take 
+                            advantage of the features of Access 2010. You'll learn 
+                            how to build database applications, create Web-based 
+                            databases, develop macros and VBA tools for Access 
+                            applications, integrate Access with SharePoint, and 
+                            much more.
+                        </p>
+                    </article>
+                
+                    <article class="book">
+                        <header>
+                            <a href="http://www.apress.com/9781430228295" 
+                               target="_blank">
+                                <img src="images\sharepoint_pm.png" 
+                                     alt="Pro Project Management w/SharePoint 2010"/>
+                            </a>
+                        </header>
+                        <p>
+                            The intention of this book is to provide a working 
+                            case study that you can follow to create a complete 
+                            PMIS (project management information system) with 
+                            SharePoint Server's out-of-the-box functionality.
+                        </p>
+                    </article>
+                
+                    <article class="book">
+                        <header>
+                            <a href="http://www.apress.com/9781430229049" 
+                               target="_blank">
+                                <img src="images\office_workflow.png" 
+                                     alt="Office 2010 Workflow"/>
+                            </a>
+                        </header>
+                        <p>
+                            Workflow is the glue that binds information worker 
+                            processes, users, and artifacts—without it, 
+                            information workers are just islands of data and
+                            potential. Office 2010 Workflow walks you through 
+                            implementing workflow solutions.
+                        </p>
+                    </article>
+                
+                    <article class="book">
+                        <header>
+                            <a href="http://www.apress.com/9781430224853" 
+                               target="_blank">
+                                <img src="images\beginning_wf.png" 
+                                     alt="Beginning WF"/>
+                            </a>
+                        </header>
+                        <p>
+                            Indexed by feature so you can find answers easily 
+                            and written in an accessible style, Beginning WF 
+                            shows how Microsoft's Workflow Foundation (WF) 
+                            technology can be used in a wide variety of 
+                            applications.
+                        </p>
+                    </article>
+                </section>
+            </aside>
+        </div>
+        
+        <footer>
+            <p>
+                Last updated <time datetime="2015-03-07T20:32:22+05:00">
+                    March 7th 2015</time> 
+                by <a href="http://www.thecreativepeople.com" 
+                      target="_blank">Mark J. Collins</a>
+            </p>        
+        </footer>
+        
+    </body>
+</html>

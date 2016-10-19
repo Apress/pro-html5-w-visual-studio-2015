@@ -1,0 +1,10 @@
+{
+  "AppSettings": {
+    "SiteTitle": "Agent"
+  },
+  "Data": {
+    "DefaultConnection": {
+      "ConnectionString": "Server=(localdb)\\mssqllocaldb;Database=aspnet5-Agent-db0548f4-3f8d-481a-acf5-90f23457e4e9;Trusted_Connection=True;MultipleActiveResultSets=true"
+    }
+  }
+}

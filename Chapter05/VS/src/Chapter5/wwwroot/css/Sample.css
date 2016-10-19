@@ -1,0 +1,24 @@
+﻿h1
+{
+    font-size:22px;
+    color:purple;
+}
+
+#output
+{
+    width: 500px;
+    height: 250px;
+    background-color:#dfcaca;
+}
+
+.button
+{
+    width:125px;
+    height:25px;
+    color:green;
+}
+
+.text
+{
+    width:260px;
+}

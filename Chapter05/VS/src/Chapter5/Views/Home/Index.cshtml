@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Chapter 5 - Web Workers</title>
+    <link rel="stylesheet" type="text/css" href="~/css/Sample.css" />
+    <script type="text/javascript" src="~/controlWorker.js"></script>
+    <script type="text/javascript" src="~/controlSharedWorker.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Web Workers Demo</h1>
+    </header>
+
+    <div>
+        <textarea id="output"></textarea>
+    </div>
+
+    <form id="control" method="post" action="">
+        <input id="create" type="button" class="button" value="Create Worker"
+               onclick="createWorker()"> <br>
+        <input id="send" type="button" class="button" value="Send Message"
+               onclick="sendWorkerMessage()">
+        <input id="message" type="text" class="text" value="Hello, World!"><br>
+        <input id="kill" type="button" class="button" value="Close Worker"
+               onclick="closeWorker()">
+        <br><br>
+        <input id="createS" type="button" class="button" value="Create Shared"
+               onclick="createSharedWorker()"> <br>
+        <input id="sendS" type="button" class="button" value="Send Shared Msg"
+               onclick="sendSharedWorkerMessage()">
+        <input id="messageS" type="text" class="text" value="Hello, World!"><br>
+        <input id="killS" type="button" class="button" value="Close Shared"
+               onclick="closeSharedWorker()">
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,189 @@
+﻿<head>
+    <style>
+        body 
+        {  
+            background: #f0f0f0;  
+            width: 900px;
+        } 
+        .agent
+        {
+            display:block;
+            float:right;
+        } 
+        .client 
+        {
+            display: block;
+            float: left; 
+            width: 400px;
+            height: 385px;
+            border: 2px solid #6699cc;
+            border-radius: 5px;
+            background-color: white;
+        }
+        .chat 
+        {
+            height: 300px;
+            font-size: smaller;
+            line-height: 12px;
+            overflow-y: scroll;
+        }
+        .input 
+        {
+            width:330px;
+        }
+        .clientName 
+        {
+            height: 20px;
+            width: 380px;
+            text-align: center;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        .sender
+        {
+            font-weight: bold;
+        }
+        .message
+        {
+            font-weight: normal;
+            display:inline;
+        }
+    </style>
+    <script type="text/javascript">
+
+        var ws; // This is our socket
+
+        function connect() {
+
+            output("Connecting to host...");
+            try {
+                ws = new WebSocket("ws://localhost:8300/chat");
+            } catch (e) {
+                output(e);
+            }
+            ws.onopen = function () {
+                output("connected... ");
+
+                // Send the Agent sign-on message
+                var p = document.getElementById("agentName");
+                ws.send("[Agent SignOn:" + p.innerHTML + "]");
+            };
+
+            ws.onmessage = function (e) {
+                displayMsg(e.data);
+            };
+
+            ws.onclose = function () {
+                output("Connection closed");
+            };
+        };
+
+        // Send the input text to the server
+        function send(i) {
+            var input = document.getElementById("input" + i);
+
+            try {
+                ws.send(i + ":" + input.value);
+                var o = document.getElementById("chat" + i);
+                o.innerHTML = o.innerHTML + "<p><b>Me:</b>" + input.value + "</p>";
+                input.value = "";
+            } catch (e) {
+                output(e);
+            }
+        }
+
+        // Add text to the debug area
+        function output(msg) {
+            var o = document.getElementById("output");
+            o.innerHTML = o.innerHTML + "<p>" + msg + "</p>";
+        };
+
+        // Handle a received message
+        function displayMsg(msg) {
+            var i = msg.substring(0, 1);
+            var cmd = msg.substring(0, 12);
+
+            // For the initial message from the server, save the client's name
+            if (cmd === "[ClientName:") {
+                displayClientName(msg.substring(12));
+            }
+
+            // If the client has disconnected, clear the chat window
+            else if (cmd === "[ClientClose") {
+                resetClient(msg.substring(13,14));
+            }
+
+            // Display the message in the debug area is not formatted properly
+            else if (i != "1" && i != "2" && i != "3" && i != "4") {
+                output(msg)
+            }
+
+            // Display the message in the chat window
+            else {
+                var o = document.getElementById("chat" + i);
+                o.innerHTML = o.innerHTML + "<p><b>Client:</b>" +
+                    msg.substring(3, msg.length) + "</p>";
+            }
+        };
+
+        // Display the client's name in the chat window
+        function displayClientName(msg) {
+            var i = msg.substring(0, 1);
+            var o = document.getElementById("client" + i);
+            o.innerHTML = msg.substring(1, msg.length - 1);
+        }
+
+        // Clear the chat window so it can be reused for another client
+        function resetClient(i) {
+            // Clear the client's name
+            var o = document.getElementById("client" + i);
+            o.innerHTML = "unassigned";
+
+            // Remove the chat messages
+            var o2 = document.getElementById("chat" + i);
+            while (o2.hasChildNodes()) {
+                o2.removeChild(o2.firstChild);
+            }
+        }
+    </script>
+</head>
+<body onload="connect();">
+    <div class="agent">
+        <div>
+            <p id="agentName">@User.Identity.Name</p>
+            <pre id="output"></pre>
+        </div>
+        <div id="div1" class="client">
+            <p id="client1" class="clientName">unassigned</p>
+            <div id="chat1" class="chat">
+
+            </div>
+            <input type="text" id="input1" class="input" value="" />
+            <input type="submit" value="Send" onclick="send('1');" />
+        </div>
+        <div id="div2" class="client">
+            <p id="client2" class="clientName">unassigned</p>
+            <div id="chat2" class="chat">
+
+            </div>
+            <input type="text" id="input2" class="input" value="" />
+            <input type="submit" value="Send" onclick="send('2');" />
+        </div>
+        <div id="div3" class="client">
+            <p id="client3" class="clientName">unassigned</p>
+            <div id="chat3" class="chat">
+
+            </div>
+            <input type="text" id="input3" class="input" value="" />
+            <input type="submit" value="Send" onclick="send('3');" />
+        </div>
+        <div id="div4" class="client">
+            <p id="client4" class="clientName">unassigned</p>
+            <div id="chat4" class="chat">
+
+            </div>
+            <input type="text" id="input4" class="input" value="" />
+            <input type="submit" value="Send" onclick="send('4');" />
+        </div>
+    </div>
+</body>

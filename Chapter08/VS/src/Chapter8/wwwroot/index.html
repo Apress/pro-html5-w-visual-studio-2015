@@ -1,0 +1,197 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <audio id="audio"  
+            onplay="updatePlayPause()"
+            onpause="updatePlayPause()"
+            onended="endAudio()"
+            ontimeupdate="updateSeek()"
+            ondurationchange="setupSeek()"
+            onvolumechange="updateMute()" >
+            <source src="Media/Linus and Lucy.ogg" type="audio/ogg" id="oggSource" />
+            <source src="Media/Linus and Lucy.mp3" type="audio/mp3" id="mp3Source" />
+            <p>HTML5 audio is not supported on your browser</p>
+        </audio>
+        <div id="audioControls">
+            <input type="button" value="Play" id="play" onclick="togglePlay()" />
+            <input type="range" id="audioSeek" onchange="seekAudio()" />
+            <span id="duration"></span>
+            <input type="button" id="mute" value="Mute" onclick="toggleMute()" />
+            <input type="range" id="volume" min="0" max="1" step="any"
+                   onchange="setVolume()" />
+        </div>
+        <video id="video" poster="Media/BBB_Poster.png" width="852" height="480"
+               onplay="updatePlayPauseVideo()"
+               onpause="updatePlayPauseVideo()"
+               onended="endVideo()"
+               ontimeupdate="updateSeekVideo()"
+               ondurationchange="setupSeekVideo()"
+               onvolumechange="updateMuteVideo()">
+            <source src="Media/BigBuckBunny.webm" type="video/webm" />
+            <source src="Media/BigBuckBunny.mp4" type="video/mp4" />
+            <p>HTML5 video is not supported on your browser</p>
+        </video>
+        <div id="videoControls">
+            <input type="button" value="Play" id="playVideo" onclick="togglePlayVideo()" />
+            <input type="range" id="videoSeek" onchange="seekVideo()" />
+            <span id="durationVideo"></span>
+            <input type="button" id="muteVideo" value="Mute" onclick="toggleMuteVideo()" />
+            <input type="range" id="volumeVideo" min="0" max="1" step="any"
+                   onchange="setVolumeVideo()" />
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        var audio = document.getElementById("audio");
+        var songCount = 0;
+
+        function setupSeek() {
+            var seek = document.getElementById("audioSeek");
+            seek.min = 0;
+            seek.max = Math.round(audio.duration);
+            seek.value = 0;
+            var duration = document.getElementById("duration");
+            duration.innerHTML = "0/" + Math.round(audio.duration);
+        }
+
+        function togglePlay() {
+            if (audio.paused || audio.ended) {
+                audio.play();
+            }
+            else {
+                audio.pause();
+            }
+        }
+
+        function updatePlayPause() {
+            var play = document.getElementById("play");
+            if (audio.paused || audio.ended) {
+                play.value = "Play";
+            }
+            else {
+                play.value = "Pause";
+            }
+        }
+
+        function endAudio() {
+            document.getElementById("play").value = "Play";
+            document.getElementById("audioSeek").value = 0;
+            document.getElementById("duration").innerHTML = "0/" + Math.round(audio.duration);
+
+            if (++songCount < 2) {
+                document.getElementById("oggSource").src = "Media/Sample.ogg";
+                document.getElementById("mp3Source").src = "Media/Sample.mp3";
+                audio.load();
+                audio.play();
+            }
+        }
+
+        function seekAudio() {
+            var seek = document.getElementById("audioSeek");
+            audio.currentTime = seek.value;
+        }
+
+        function updateSeek() {
+            var seek = document.getElementById("audioSeek");
+            seek.value = Math.round(audio.currentTime);
+            var duration = document.getElementById("duration");
+            duration.innerHTML = Math.round(audio.currentTime) + "/" + Math.round(audio.duration);
+        }
+
+        function toggleMute() {
+            audio.muted = !audio.muted;
+        }
+
+        function updateMute() {
+            var mute = document.getElementById("mute");
+            if (audio.muted) {
+                mute.value = "Unmute";
+            }
+            else {
+                mute.value = "Mute";
+            }
+        }
+
+        function setVolume() {
+            var volume = document.getElementById("volume");
+            audio.volume = volume.value;
+        }
+    </script>
+    <script type="text/javascript">
+        var video = document.getElementById("video");
+
+        function setupSeekVideo() {
+            var seek = document.getElementById("videoSeek");
+            seek.min = 0;
+            seek.max = Math.round(video.duration);
+            seek.value = 0;
+            var duration = document.getElementById("durationVideo");
+            duration.innerHTML = "0/" + Math.round(video.duration);
+        }
+
+        function togglePlayVideo() {
+            if (video.paused || video.ended) {
+                video.play();
+            }
+            else {
+                video.pause();
+            }
+        }
+
+        function updatePlayPauseVideo() {
+            var play = document.getElementById("playVideo");
+            if (video.paused || video.ended) {
+                play.value = "Play";
+            }
+            else {
+                play.value = "Pause";
+            }
+        }
+
+        function endVideo() {
+            document.getElementById("playVideo").value = "Play";
+            document.getElementById("videoSeek").value = 0;
+            document.getElementById("durationVideo").innerHTML = "0/"
+                + Math.round(video.duration);
+        }
+
+        function seekVideo() {
+            var seek = document.getElementById("videoSeek");
+            video.currentTime = seek.value;
+        }
+
+        function updateSeekVideo() {
+            var seek = document.getElementById("videoSeek");
+            seek.value = Math.round(video.currentTime );
+            var duration = document.getElementById("durationVideo");
+            duration.innerHTML = Math.round(video.currentTime) + "/"
+                + Math.round(video.duration);
+        }
+
+        function toggleMuteVideo() {
+            video.muted = !video.muted;
+        }
+
+        function updateMuteVideo() {
+            var mute = document.getElementById("muteVideo");
+            if (video.muted) {
+                mute.value = "Unmute";
+            }
+            else {
+                mute.value = "Mute";
+            }
+        }
+
+        function setVolumeVideo() {
+            var volume = document.getElementById("volumeVideo");
+            video.volume = volume.value;
+        }
+
+    </script>
+</body>
+</html>

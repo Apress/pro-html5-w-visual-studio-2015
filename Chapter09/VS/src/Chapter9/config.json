@@ -1,0 +1,10 @@
+{
+  "AppSettings": {
+    "SiteTitle": "Chapter9"
+  },
+  "Data": {
+    "DefaultConnection": {
+      "ConnectionString": "Server=(localdb)\\mssqllocaldb;Database=aspnet5-Chapter9-674b885f-319e-4d18-80ae-c3891a4223fa;Trusted_Connection=True;MultipleActiveResultSets=true"
+    }
+  }
+}

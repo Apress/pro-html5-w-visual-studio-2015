@@ -1,0 +1,108 @@
+﻿@model Chapter3.Models.FeedbackModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Feedback</title>
+    <script type="text/javascript">
+        function calculateProgress() {
+            var value = 0;
+            var fieldList = document.getElementsByClassName("text-box single-line");
+            for (var i = 0; i < fieldList.length; i++) {
+                if (fieldList[i].value > "")
+                    value += 17;
+            }
+            if (value > 100)
+                value = 100;
+            var progress = document.getElementById("FormProgress");
+            progress.value = value;
+        };
+        function bindEvents() {
+            var fieldList = document.getElementsByClassName("text-box single-line");
+            for (var i = 0; i < fieldList.length; i++) {
+                fieldList[i].addEventListener("change", calculateProgress, false);
+            }
+            setInterval(function () {
+                var meter = document.getElementById("Meter");
+                meter.value = meter.min + Math.random() * (meter.max - meter.min);
+            }, 1000);
+        }
+    </script>
+</head>
+<body onload="bindEvents();">
+    <div> 
+        @using (Html.BeginForm((string)ViewBag.FormAction, "Home"))
+        {
+            <fieldset>
+                <legend>Feedback Form</legend>
+                <div>
+                    @Html.EditorFor(m => m.Email)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(m => m.Name)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(m => m.Name)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(m => m.Birthday)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(m => m.Birthday)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(m => m.Homepage)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(m => m.Homepage)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(m => m.Phone)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(m => m.Phone)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(m => m.Score)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(m => m.Score)
+                </div>
+                <div class="editor-label">
+                    @Html.LabelFor(m => m.Satisfaction)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(m => m.Satisfaction)
+                </div>
+                <div>
+                    Custom range
+                    <input type="range" id="CustomRange" name="CustomRange"
+                           class="range"
+                           style="width: 100px; height: 30px; transform: rotate(90deg)"
+                           min="0" max="200" step="20" />
+                </div>
+                <p>
+                    <input type="submit" value="Submit" />
+                </p>
+                <div>
+                    <progress id="FormProgress" value="0" max="100">
+                        <strong>Progress: 60%</strong>
+                    </progress>
+                </div>
+                <div>
+                    <meter id="Meter" value="50" min="20" max="120"
+                           low="50" high="100" optimum="75">
+                        <strong>Meter:</strong>
+                    </meter>
+                </div>
+            </fieldset>
+        }
+    </div>
+</body>
+</html>

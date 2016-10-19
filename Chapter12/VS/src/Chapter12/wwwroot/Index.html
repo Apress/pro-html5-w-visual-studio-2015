@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript"
+            src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0">
+    </script>
+</head>
+<body>
+    <div style="width:800px; height:50px;">
+        <span id="lbl"> </span>
+    </div>
+    <div id="map" style="width:800px; height:600px;">
+
+    </div>
+    <script type="text/javascript">
+
+    var lbl = document.getElementById("lbl");
+    var map = null;
+
+    var restrooms = [
+        { lat: 37.810079, long: -122.410806 },
+        { lat: 37.809079, long: -122.410206 },
+        { lat: 37.811279, long: -122.410446 }
+    ];
+
+    if (navigator.geolocation) {
+        navigator.geolocation
+            .getCurrentPosition(showLocation,
+                                errorHandler,
+                                {
+                                    maximumAge: 100,
+                                    timeout: 6000,
+                                    enableHighAccuracy: true
+                                });
+    }
+    else {
+        alert("Geolocation not suported");
+    }
+
+    function showLocation(pos) {
+        // Save the current location
+        var lat = pos.coords.latitude;
+        var long = pos.coords.longitude;
+
+        // Override these for testing purposes
+        lat = 37.811079;
+        long = -122.410546;
+
+        lbl.innerHTML =
+            "Your latitude: " + lat +
+            " and longitude: " + long +
+            " (Accuracy of: " +  pos.coords.accuracy + " meters)";
+
+        // Create the map
+        map = new Microsoft.Maps.Map(document.getElementById("map"),
+             {
+                 credentials:
+                   "<put your key here>"
+             });
+
+        // Center it on the current location
+        map.setView({ zoom: 18, center: new Microsoft.Maps.Location(lat, long) });
+
+        // Mark the current location
+        var pushpin = new Microsoft.Maps.Pushpin
+            (new Microsoft.Maps.Location(lat, long), null);
+        map.entities.push(pushpin);
+
+        // Display the restroom locations
+        markRestrooms();
+    }
+
+    function errorHandler(e) {
+        if (e.code === 1) { // PERMISSION_DENIED
+            lbl.innerHTML = "Permission denied. - " + e.message;
+        } else if (e.code === 2) { //POSITION_UNAVAILABLE
+            lbl.innerHTML = "Make sure your network connection is active and " +
+                "try this again. - " + e.message;
+        } else if (e.code === 3) { //TIMEOUT
+            lbl.innerHTML = "A timeout ocurred; try again. - " + e.message;
+        }
+    }
+
+    function markRestrooms() {
+        for (var i in restrooms) {
+            markRestroom(restrooms[i].lat, restrooms[i].long);
+        }
+    }
+
+    function markRestroom(lat, long) {
+        var pushpinOptions = { icon: '/images/restroom.gif', width: 35, height: 35 };
+        var pushpin = new Microsoft.Maps.Pushpin
+            (new Microsoft.Maps.Location(lat, long), pushpinOptions);
+        map.entities.push(pushpin);
+    }
+    </script>
+</body>
+</html>pin);
+    }
+    </script>
+</body>
+</html>
